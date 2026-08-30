@@ -48,7 +48,7 @@ router.post('/request-otp', async (req, res) => {
     res.json({ 
       message: `Please open the Telegram bot and send /login to verify your phone number.`,
       action: 'NEW_USER',
-      botUsername: 'WatchMyWebNotifierBot' // Provide bot username
+      botUsername: process.env.TELEGRAM_BOT_USERNAME || 'NotifierWebsite_bot' // Provide bot username
     });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
