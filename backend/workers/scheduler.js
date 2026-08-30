@@ -107,22 +107,19 @@ const checkMonitors = async () => {
 };
 
 const startScheduler = () => {
-
-      if (dueMonitors.length > 0) {
-        for (const monitor of dueMonitors) {
-          await processMonitor(monitor, data);
-          // find and update the monitor in array
-          const index = data.monitors.findIndex(m => m._id === monitor._id);
-          if (index !== -1) {
-            data.monitors[index] = monitor;
-          }
-        }
-        writeData(data);
-      }
-    } catch (error) {
-      console.error('Scheduler error:', error);
-    }
+  if (schedulerTask) {
+    schedulerTask.stop();
+  }
+  
+  // Run every 1 minute
+  schedulerTask = cron.schedule('* * * * *', () => {
+    checkMonitors();
   });
+  
+  console.log('Scheduler started. Checking for updates every minute.');
 };
 
-module.exports = { startScheduler, processMonitor };
+module.exports = {
+  startScheduler,
+  checkMonitors
+};
