@@ -1,127 +1,121 @@
 const express = require('express');
 const router = express.Router();
-const crypto = require('crypto');
-const { readData, writeData } = require('../store');
+const Monitor = require('../models/Monitor');
 const { protect } = require('../middleware/auth');
 
 router.use(protect);
 
-router.get('/', (req, res) => {
-  const data = readData();
-  const monitors = data.monitors.filter(m => m.userId === req.user._id).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  res.json(monitors);
+router.get('/', async (req, res) => {
+  try {
+    const monitors = await Monitor.find({ userId: req.user._id }).sort({ createdAt: -1 });
+    res.json(monitors);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
 });
 
-router.get('/:id', (req, res) => {
-  const data = readData();
-  const monitor = data.monitors.find(m => m._id === req.params.id && m.userId === req.user._id);
-  if (!monitor) return res.status(404).json({ message: 'Monitor not found' });
-  res.json(monitor);
+router.get('/:id', async (req, res) => {
+  try {
+    const monitor = await Monitor.findOne({ _id: req.params.id, userId: req.user._id });
+    if (!monitor) return res.status(404).json({ message: 'Monitor not found' });
+    res.json(monitor);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const { name, url, type, description, identifier, frequency, notificationMethods } = req.body;
-  // Set nextCheckAt to right now so the very first check happens immediately on the next scheduler tick
-  const nextCheckAt = new Date().toISOString();
-
-  const data = readData();
-  const newMonitor = {
-    _id: crypto.randomUUID(),
-    userId: req.user._id,
-    name,
-    url,
-    type,
-    description,
-    identifier,
-    frequency,
-    notificationMethods,
-    status: 'ACTIVE',
-    lastCheckedAt: null,
-    nextCheckAt,
-    lastContentHash: null,
-    lastRelevantContent: null,
-    lastChangeDetectedAt: null,
-    triggeredAt: null,
-    errorCount: 0,
-    lastError: null,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  };
   
-  data.monitors.push(newMonitor);
-  writeData(data);
-  
-  res.status(201).json(newMonitor);
+  try {
+    const newMonitor = await Monitor.create({
+      userId: req.user._id,
+      name,
+      url,
+      type,
+      description,
+      identifier,
+      frequency,
+      notificationMethods,
+      status: 'ACTIVE',
+      nextCheckAt: new Date()
+    });
+    res.status(201).json(newMonitor);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
 });
 
-router.put('/:id', (req, res) => {
-  const data = readData();
-  const index = data.monitors.findIndex(m => m._id === req.params.id && m.userId === req.user._id);
-  if (index === -1) return res.status(404).json({ message: 'Monitor not found' });
-  
-  data.monitors[index] = { ...data.monitors[index], ...req.body, updatedAt: new Date().toISOString() };
-  writeData(data);
-  
-  res.json(data.monitors[index]);
+router.put('/:id', async (req, res) => {
+  try {
+    const monitor = await Monitor.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user._id },
+      { $set: req.body },
+      { new: true }
+    );
+    if (!monitor) return res.status(404).json({ message: 'Monitor not found' });
+    res.json(monitor);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
 });
 
-router.delete('/:id', (req, res) => {
-  const data = readData();
-  const initialLength = data.monitors.length;
-  data.monitors = data.monitors.filter(m => !(m._id === req.params.id && m.userId === req.user._id));
-  
-  if (data.monitors.length === initialLength) return res.status(404).json({ message: 'Monitor not found' });
-  
-  writeData(data);
-  res.json({ message: 'Monitor deleted' });
+router.delete('/:id', async (req, res) => {
+  try {
+    const monitor = await Monitor.findOneAndDelete({ _id: req.params.id, userId: req.user._id });
+    if (!monitor) return res.status(404).json({ message: 'Monitor not found' });
+    res.json({ message: 'Monitor deleted' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
 });
 
-router.post('/:id/pause', (req, res) => {
-  const data = readData();
-  const index = data.monitors.findIndex(m => m._id === req.params.id && m.userId === req.user._id);
-  if (index === -1) return res.status(404).json({ message: 'Monitor not found' });
-  
-  data.monitors[index].status = 'PAUSED';
-  data.monitors[index].updatedAt = new Date().toISOString();
-  writeData(data);
-  
-  res.json(data.monitors[index]);
+router.post('/:id/pause', async (req, res) => {
+  try {
+    const monitor = await Monitor.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user._id },
+      { $set: { status: 'PAUSED' } },
+      { new: true }
+    );
+    if (!monitor) return res.status(404).json({ message: 'Monitor not found' });
+    res.json(monitor);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
 });
 
-router.post('/:id/resume', (req, res) => {
-  const data = readData();
-  const index = data.monitors.findIndex(m => m._id === req.params.id && m.userId === req.user._id);
-  if (index === -1) return res.status(404).json({ message: 'Monitor not found' });
-  
-  data.monitors[index].status = 'ACTIVE';
-  data.monitors[index].nextCheckAt = new Date(Date.now() + 5000).toISOString();
-  data.monitors[index].updatedAt = new Date().toISOString();
-  writeData(data);
-  
-  res.json(data.monitors[index]);
+router.post('/:id/resume', async (req, res) => {
+  try {
+    const monitor = await Monitor.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user._id },
+      { $set: { status: 'ACTIVE', nextCheckAt: new Date(Date.now() + 5000) } },
+      { new: true }
+    );
+    if (!monitor) return res.status(404).json({ message: 'Monitor not found' });
+    res.json(monitor);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
 });
 
 router.post('/:id/scrape', async (req, res) => {
-  const data = readData();
-  const index = data.monitors.findIndex(m => m._id === req.params.id && m.userId === req.user._id);
-  if (index === -1) return res.status(404).json({ message: 'Monitor not found' });
-  
-  const monitor = data.monitors[index];
-  
-  if (!monitor.url.includes('kfintech') && !monitor.url.includes('mufg') && !monitor.url.includes('vishnu.edu')) {
-    return res.status(400).json({ message: 'Automated scraping only supported for KFintech, MUFG, and Vishnu.' });
-  }
-
-  const { scrapeAllotment } = require('../services/monitoring/scraperService');
-  
   try {
+    const monitor = await Monitor.findOne({ _id: req.params.id, userId: req.user._id });
+    if (!monitor) return res.status(404).json({ message: 'Monitor not found' });
+    
+    if (!monitor.url.includes('kfintech') && !monitor.url.includes('mufg') && !monitor.url.includes('vishnu.edu')) {
+      return res.status(400).json({ message: 'Automated scraping only supported for KFintech, MUFG, and Vishnu.' });
+    }
+
+    const { scrapeAllotment } = require('../services/monitoring/scraperService');
     const results = await scrapeAllotment(monitor);
-    data.monitors[index].allotmentResults = results;
-    data.monitors[index].updatedAt = new Date().toISOString();
-    writeData(data);
-    res.json(data.monitors[index]);
+    
+    monitor.allotmentResults = results;
+    await monitor.save();
+    
+    res.json(monitor);
   } catch (err) {
-    res.status(500).json({ message: 'Scraping failed' });
+    res.status(500).json({ message: 'Scraping failed', error: err.message });
   }
 });
 

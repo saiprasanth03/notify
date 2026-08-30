@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
-const { readData, writeData } = require('../store');
+const User = require('../models/User');
+const Otp = require('../models/Otp');
 const { getBot } = require('../services/notifications/telegramService');
 const { protect } = require('../middleware/auth');
 
@@ -16,84 +16,82 @@ router.post('/request-otp', async (req, res) => {
   const { identifier } = req.body;
   if (!identifier) return res.status(400).json({ message: 'Identifier required' });
 
-  let data = readData();
-  
-  // Clean up old OTPs
-  data.otps = data.otps.filter(o => o.expiresAt > Date.now());
-
-  const user = data.users.find(u => u.identifier === identifier);
-  
-  if (user && user.telegramChatId) {
-    // Generate 6-digit OTP
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  try {
+    const user = await User.findOne({ identifier });
     
-    data.otps.push({
-      identifier,
-      otp,
-      expiresAt: Date.now() + 10 * 60000 // 10 minutes
-    });
-    writeData(data);
+    if (user && user.telegramChatId) {
+      // Generate 6-digit OTP
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+      
+      await Otp.create({
+        identifier,
+        otp,
+        expiresAt: new Date(Date.now() + 10 * 60000) // 10 minutes
+      });
 
-    // Send OTP directly via bot
-    const bot = getBot();
-    if (bot) {
-      bot.sendMessage(user.telegramChatId, `🔑 Your Login OTP is: *${otp}*`, { parse_mode: 'Markdown' });
-      return res.json({ message: 'OTP sent to your Telegram app!' });
+      // Send OTP directly via bot
+      const bot = getBot();
+      if (bot) {
+        bot.sendMessage(user.telegramChatId, `🔑 Your Login OTP is: *${otp}*`, { parse_mode: 'Markdown' });
+        return res.json({ message: 'OTP sent to your Telegram app!' });
+      }
     }
+
+    // If new user or not linked, save a dummy OTP record so the bot can find the exact identifier they typed
+    await Otp.create({
+      identifier,
+      otp: 'PENDING', // Dummy OTP
+      expiresAt: new Date(Date.now() + 15 * 60000) // 15 minutes
+    });
+
+    // If new user or not linked, tell them to use the bot command
+    res.json({ 
+      message: `Please open the Telegram bot and send /login to verify your phone number.`,
+      action: 'NEW_USER',
+      botUsername: 'WatchMyWebNotifierBot' // Provide bot username
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
-
-  // If new user or not linked, save a dummy OTP record so the bot can find the exact identifier they typed
-  data.otps.push({
-    identifier,
-    otp: 'PENDING', // Dummy OTP
-    expiresAt: Date.now() + 15 * 60000 // 15 minutes
-  });
-  writeData(data);
-
-  // If new user or not linked, tell them to use the bot command
-  res.json({ 
-    message: `Please open the Telegram bot and send /login to verify your phone number.`,
-    action: 'NEW_USER',
-    botUsername: 'WatchMyWebNotifierBot' // Provide bot username
-  });
 });
 
 // @route   POST /api/auth/verify-otp
 // @desc    Verify OTP and login
 router.post('/verify-otp', async (req, res) => {
   const { identifier, otp } = req.body;
-  let data = readData();
-
-  const otpRecordIndex = data.otps.findIndex(o => o.identifier === identifier && o.otp === otp && o.expiresAt > Date.now());
   
-  if (otpRecordIndex === -1) {
-    return res.status(401).json({ message: 'Invalid or expired OTP' });
+  try {
+    const otpRecord = await Otp.findOne({ 
+      identifier, 
+      otp,
+      expiresAt: { $gt: new Date() }
+    });
+    
+    if (!otpRecord) {
+      return res.status(401).json({ message: 'Invalid or expired OTP' });
+    }
+
+    // OTP valid, remove it
+    await Otp.deleteOne({ _id: otpRecord._id });
+
+    // Find or create user
+    let user = await User.findOne({ identifier });
+    if (!user) {
+      user = await User.create({
+        identifier,
+        name: identifier
+      });
+    }
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      identifier: user.identifier,
+      token: generateToken(user._id)
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
-
-  // OTP valid, remove it
-  data.otps.splice(otpRecordIndex, 1);
-
-  // Find or create user
-  let user = data.users.find(u => u.identifier === identifier);
-  if (!user) {
-    user = {
-      _id: crypto.randomUUID(),
-      identifier,
-      name: identifier, // default to identifier
-      telegramChatId: null, // Will be linked when they use the bot
-      createdAt: new Date().toISOString()
-    };
-    data.users.push(user);
-  }
-
-  writeData(data);
-
-  res.json({
-    _id: user._id,
-    name: user.name,
-    identifier: user.identifier,
-    token: generateToken(user._id)
-  });
 });
 
 // @route   GET /api/auth/me

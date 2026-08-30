@@ -1,5 +1,6 @@
 const TelegramBot = require('node-telegram-bot-api');
-const { readData, writeData } = require('../../store');
+const User = require('../../models/User');
+const Otp = require('../../models/Otp');
 
 let bot = null;
 
@@ -34,57 +35,53 @@ if (process.env.TELEGRAM_BOT_TOKEN) {
     // Normalize phone number (remove + or spaces)
     let phone = msg.contact.phone_number.replace(/\D/g, '');
     
-    // Check if the user entered this number or a variation on the website
-    let data = readData();
-    data.otps = data.otps.filter(o => o.expiresAt > Date.now());
+    try {
+      // Find a pending OTP that matches this phone number
+      const otps = await Otp.find({ expiresAt: { $gt: new Date() } });
+      const pendingOtp = otps.find(o => phone.endsWith(o.identifier.replace(/\D/g, '')) || o.identifier.replace(/\D/g, '').endsWith(phone));
+      
+      let identifier = pendingOtp ? pendingOtp.identifier : phone;
 
-    // Try to find if an OTP was requested for this phone number
-    // We check exact match, or if one ends with the other (to handle country codes)
-    let pendingOtp = data.otps.find(o => phone.endsWith(o.identifier.replace(/\D/g, '')) || o.identifier.replace(/\D/g, '').endsWith(phone));
+      // Link user
+      let user = await User.findOne({ identifier });
+      if (!user) {
+        user = await User.create({
+          identifier,
+          name: identifier,
+          telegramChatId: chatId.toString(),
+          telegramUsername: msg.chat.username || 'Unknown',
+          telegramConnected: true
+        });
+      } else {
+        user.telegramChatId = chatId.toString();
+        user.telegramUsername = msg.chat.username || 'Unknown';
+        user.telegramConnected = true;
+        await user.save();
+      }
 
-    let identifier = pendingOtp ? pendingOtp.identifier : phone;
-
-    // Link user
-    let user = data.users.find(u => u.identifier === identifier);
-    if (!user) {
-      const crypto = require('crypto');
-      user = {
-        _id: crypto.randomUUID(),
+      // Generate a fresh OTP for them to use right now
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+      await Otp.create({
         identifier,
-        name: identifier,
-        telegramChatId: chatId.toString(),
-        telegramUsername: msg.chat.username || 'Unknown',
-        telegramConnected: true,
-        createdAt: new Date().toISOString()
-      };
-      data.users.push(user);
-    } else {
-      user.telegramChatId = chatId.toString();
-      user.telegramUsername = msg.chat.username || 'Unknown';
-      user.telegramConnected = true;
-    }
+        otp,
+        expiresAt: new Date(Date.now() + 10 * 60000)
+      });
 
-    // Generate a fresh OTP for them to use right now
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    data.otps.push({
-      identifier,
-      otp,
-      expiresAt: Date.now() + 10 * 60000
-    });
-
-    writeData(data);
-
-    const message = `
+      const message = `
 🔑 *Verification Successful!*
 
 Your One-Time Password is: \`${otp}\`
 
 Please enter this on the website to log in. It expires in 10 minutes.
-    `;
-    
-    // Remove the keyboard
-    const removeKeyboard = { reply_markup: { remove_keyboard: true }, parse_mode: 'Markdown' };
-    bot.sendMessage(chatId, message, removeKeyboard);
+      `;
+      
+      // Remove the keyboard
+      const removeKeyboard = { reply_markup: { remove_keyboard: true }, parse_mode: 'Markdown' };
+      bot.sendMessage(chatId, message, removeKeyboard);
+    } catch (err) {
+      console.error('Error linking Telegram account:', err);
+      bot.sendMessage(chatId, "An error occurred while linking your account. Please try again.");
+    }
   });
 
   bot.onText(/^\/start$/, (msg) => {

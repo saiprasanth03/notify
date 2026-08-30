@@ -21,6 +21,7 @@ const monitorSchema = new mongoose.Schema({
   triggeredAt: { type: Date, default: null },
   errorCount: { type: Number, default: 0 },
   lastError: { type: String, default: null },
+  allotmentResults: { type: Array, default: [] }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Monitor', monitorSchema);
