@@ -7,8 +7,8 @@ let bot = null;
 if (process.env.TELEGRAM_BOT_TOKEN) {
   bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
   
-  // Handle /login command - ask for phone number
-  bot.onText(/\/login/, async (msg) => {
+  // Handle /login command or /start login - ask for phone number
+  bot.onText(/\/(login|start login)/, async (msg) => {
     const chatId = msg.chat.id;
     
     const opts = {
