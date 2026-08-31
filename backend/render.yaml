@@ -2,5 +2,6 @@ services:
   - type: web
     name: notify-backend
     env: docker
+    plan: free
     dockerfilePath: backend/Dockerfile
     dockerContext: backend
