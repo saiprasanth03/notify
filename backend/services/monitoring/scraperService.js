@@ -1,4 +1,5 @@
-const puppeteer = require('puppeteer');
+const puppeteer = process.env.NODE_ENV === 'production' ? require('puppeteer-core') : require('puppeteer');
+const chromium = require('@sparticuz/chromium');
 
 const scrapeAllotment = async (monitor) => {
   if (!monitor.identifier) return [];
@@ -11,11 +12,19 @@ const scrapeAllotment = async (monitor) => {
   
   let browser = null;
   try {
-    browser = await puppeteer.launch({
-      headless: true,
-      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
-      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu']
-    });
+    if (process.env.NODE_ENV === 'production') {
+      browser = await puppeteer.launch({
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(),
+        headless: chromium.headless,
+        ignoreHTTPSErrors: true,
+      });
+    } else {
+      browser = await puppeteer.launch({
+        headless: "new"
+      });
+    }
 
     const page = await browser.newPage();
     
