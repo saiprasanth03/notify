@@ -1,7 +1,8 @@
 const cron = require('node-cron');
 const Monitor = require('../models/Monitor');
 const Notification = require('../models/Notification');
-const { extractStaticContent, scrapeAllotment } = require('../services/monitoring/scraperService');
+const { scrapeAllotment } = require('../services/monitoring/scraperService');
+const { extractStaticContent } = require('../services/monitoring/extractor');
 const { sendTelegramMessage } = require('../services/notifications/telegramService');
 const { determineRelevance } = require('../services/relevance/relevanceService');
 
