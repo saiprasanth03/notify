@@ -98,24 +98,50 @@ const Settings = () => {
         </div>
 
         <div className="space-y-4">
-          <div className="flex items-center text-green-600 bg-green-50 p-3 rounded-md">
-            <CheckCircle className="w-5 h-5 mr-2" />
-            <span>Status: Connected via Login</span>
-          </div>
-          <div>
-            <p className="text-sm text-gray-600">
-              Connected as <span className="font-semibold">@{profile?.telegramUsername || profile?.name}</span>
-            </p>
-          </div>
+          {profile?.telegramConnected ? (
+            <>
+              <div className="flex items-center text-green-600 bg-green-50 p-3 rounded-md">
+                <CheckCircle className="w-5 h-5 mr-2" />
+                <span>Status: Connected</span>
+              </div>
+              <div>
+                <p className="text-sm text-gray-600">
+                  Connected as <span className="font-semibold">@{profile?.telegramUsername || profile?.name}</span>
+                </p>
+              </div>
+              
+              <div className="flex items-center space-x-4 pt-4">
+                <button
+                  onClick={handleTestNotification}
+                  className="px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
+                >
+                  Send Test Notification
+                </button>
+                <button
+                  onClick={handleDisconnectTelegram}
+                  className="px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-red-600 bg-white hover:bg-red-50 focus:outline-none"
+                >
+                  Disconnect
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex items-center text-gray-600 bg-gray-50 p-3 rounded-md">
+                <XCircle className="w-5 h-5 mr-2" />
+                <span>Status: Not Connected</span>
+              </div>
+              <div className="pt-4">
+                <button
+                  onClick={handleConnectTelegram}
+                  className="px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+                >
+                  Connect Telegram
+                </button>
+              </div>
+            </>
+          )}
           
-          <div className="flex items-center space-x-4 pt-4">
-            <button
-              onClick={handleTestNotification}
-              className="px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
-            >
-              Send Test Notification
-            </button>
-          </div>
           {testStatus && (
             <p className={`text-sm mt-2 ${testStatus.includes('Unable') ? 'text-red-600' : 'text-green-600'}`}>
               {testStatus}

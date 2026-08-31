@@ -95,11 +95,18 @@ const sendTelegramMessage = async (chatId, monitor) => {
     return true;
   }
 
+  let resultsText = '';
+  if (monitor.allotmentResults && monitor.allotmentResults.length > 0) {
+    resultsText = '\n*Results:*\n' + monitor.allotmentResults.map(r => 
+      `• *${r.pan}*: ${r.status}${r.name && r.name !== 'N/A' && r.name !== r.status ? ` - ${r.name}` : ''}`
+    ).join('\n') + '\n';
+  }
+
   const message = `
 🚨 *Update Detected!*
 
 *${monitor.name}* has just been updated.
-
+${resultsText}
 ${monitor.identifier ? `*Your Identifier / PAN:* \`${monitor.identifier}\`\n` : ''}
 *Description:*
 ${monitor.description}

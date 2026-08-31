@@ -17,6 +17,7 @@ app.use(morgan('dev'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/monitors', require('./routes/monitors'));
 app.use('/api/demo', require('./routes/demo'));
+app.use('/api/telegram', require('./routes/telegram'));
 
 // Basic health check
 app.get('/api/health', (req, res) => {

@@ -78,63 +78,70 @@ const scrapeAllotment = async (monitor) => {
             
             page.off('dialog', dialogHandler);
             
-            // Aggressive Name Extractor
-            let extractedName = await page.evaluate(() => {
-              // Attempt 1: Regex on full page text
+            // Aggressive Name and Shares Extractor
+            let extractedData = await page.evaluate(() => {
+              let name = null;
+              let shares = null;
+              
               const fullText = document.body.innerText;
-              // Look for "Name" followed by colon or newlines/spaces, then capture uppercase letters/spaces
               const regexMatch = fullText.match(/(?:Applicant Name|Name)[\s\n:]+([A-Z\s\.\-]{4,50})(?:\n|$)/i);
               if (regexMatch && regexMatch[1].trim().length > 2) {
-                // Ensure it's not capturing table headers like "Shares"
                 const possibleName = regexMatch[1].trim();
                 if (!possibleName.toLowerCase().includes('shares') && !possibleName.toLowerCase().includes('application')) {
-                   return possibleName;
+                   name = possibleName;
                 }
               }
+              
+              const sharesMatch = fullText.match(/(?:Shares Allotted|Allotted Shares|Allotted|Quantity Allotted)[\s\n:]+([\d,]+)(?:\n|$)/i);
+              if (sharesMatch) {
+                shares = sharesMatch[1].trim();
+              }
 
-              // Attempt 2: Table structure (<th>Name</th> -> <td>John Doe</td>)
               const ths = Array.from(document.querySelectorAll('th, td, .MuiTableCell-root'));
               const nameThIndex = ths.findIndex(el => {
                 const txt = el.innerText.trim().toLowerCase();
                 return txt === 'name' || txt === 'applicant name' || txt === 'name of the applicant';
               });
+              const sharesThIndex = ths.findIndex(el => {
+                const txt = el.innerText.trim().toLowerCase();
+                return txt.includes('allotted') && (txt.includes('shares') || txt.includes('qty') || txt.includes('quantity'));
+              });
               
-              if (nameThIndex !== -1) {
-                const headerEl = ths[nameThIndex];
-                // Try next sibling
-                if (headerEl.nextElementSibling && headerEl.nextElementSibling.innerText.trim()) {
-                  return headerEl.nextElementSibling.innerText.trim();
-                }
-                // Try jumping a spacer
-                if (headerEl.nextElementSibling?.nextElementSibling && headerEl.nextElementSibling.nextElementSibling.innerText.trim()) {
-                  return headerEl.nextElementSibling.nextElementSibling.innerText.trim();
-                }
-                
-                // Try parent row's next cell if it's a grid
-                const tr = headerEl.closest('tr');
-                if (tr) {
-                  const cells = Array.from(tr.querySelectorAll('td, th'));
-                  const idx = cells.indexOf(headerEl);
-                  if (idx !== -1 && cells[idx+1]) {
-                    return cells[idx+1].innerText.trim();
-                  }
-                  
-                  // Or if it's a standard table where header is in thead
-                  const table = tr.closest('table');
-                  if (table) {
-                    const tbodyTr = table.querySelector('tbody tr');
-                    if (tbodyTr) {
-                      const tbodyCells = tbodyTr.querySelectorAll('td');
-                      if (tbodyCells[idx]) return tbodyCells[idx].innerText.trim();
+              const extractFromThIndex = (thIndex) => {
+                  if (thIndex !== -1) {
+                    const headerEl = ths[thIndex];
+                    if (headerEl.nextElementSibling && headerEl.nextElementSibling.innerText.trim()) return headerEl.nextElementSibling.innerText.trim();
+                    if (headerEl.nextElementSibling?.nextElementSibling && headerEl.nextElementSibling.nextElementSibling.innerText.trim()) return headerEl.nextElementSibling.nextElementSibling.innerText.trim();
+                    
+                    const tr = headerEl.closest('tr');
+                    if (tr) {
+                      const cells = Array.from(tr.querySelectorAll('td, th'));
+                      const idx = cells.indexOf(headerEl);
+                      if (idx !== -1 && cells[idx+1]) return cells[idx+1].innerText.trim();
+                      
+                      const table = tr.closest('table');
+                      if (table) {
+                        const tbodyTr = table.querySelector('tbody tr');
+                        if (tbodyTr) {
+                          const tbodyCells = tbodyTr.querySelectorAll('td');
+                          if (tbodyCells[idx]) return tbodyCells[idx].innerText.trim();
+                        }
+                      }
                     }
                   }
-                }
-              }
+                  return null;
+              };
+
+              if (!name) name = extractFromThIndex(nameThIndex);
+              if (!shares) shares = extractFromThIndex(sharesThIndex);
               
-              return null;
+              return { name, shares };
             });
 
-            name = extractedName || (combinedText.includes('not found') ? "N/A" : "Check site for details");
+            name = extractedData.name || (combinedText.includes('not found') ? "N/A" : "Check site for details");
+            if (status === "Allotted" && extractedData.shares) {
+               name += ` (Shares: ${extractedData.shares})`;
+            }
             
           } catch (e) {
             status = "Scraper Error (KFintech structure changed?)";
@@ -154,15 +161,22 @@ const scrapeAllotment = async (monitor) => {
             if (pageText.includes('Not Allotted') || pageText.includes('Zero')) status = "Not Allotted";
             else if (pageText.includes('Allotted')) status = "Allotted";
             
-            // Aggressive Name Extractor
-            let extractedName = await page.evaluate(() => {
+            // Aggressive Name and Shares Extractor
+            let extractedData = await page.evaluate(() => {
+              let name = null;
+              let shares = null;
               const fullText = document.body.innerText;
               const regexMatch = fullText.match(/(?:Applicant Name|Name)[\s\n:]+([A-Z\s\.\-]{4,50})(?:\n|$)/i);
               if (regexMatch && regexMatch[1].trim().length > 2) {
                 const possibleName = regexMatch[1].trim();
                 if (!possibleName.toLowerCase().includes('shares') && !possibleName.toLowerCase().includes('application')) {
-                   return possibleName;
+                   name = possibleName;
                 }
+              }
+
+              const sharesMatch = fullText.match(/(?:Shares Allotted|Allotted Shares|Allotted|Quantity Allotted)[\s\n:]+([\d,]+)(?:\n|$)/i);
+              if (sharesMatch) {
+                shares = sharesMatch[1].trim();
               }
 
               const ths = Array.from(document.querySelectorAll('th, td, .MuiTableCell-root'));
@@ -170,37 +184,46 @@ const scrapeAllotment = async (monitor) => {
                 const txt = el.innerText.trim().toLowerCase();
                 return txt === 'name' || txt === 'applicant name' || txt === 'name of the applicant';
               });
+              const sharesThIndex = ths.findIndex(el => {
+                const txt = el.innerText.trim().toLowerCase();
+                return txt.includes('allotted') && (txt.includes('shares') || txt.includes('qty') || txt.includes('quantity'));
+              });
               
-              if (nameThIndex !== -1) {
-                const headerEl = ths[nameThIndex];
-                if (headerEl.nextElementSibling && headerEl.nextElementSibling.innerText.trim()) {
-                  return headerEl.nextElementSibling.innerText.trim();
-                }
-                if (headerEl.nextElementSibling?.nextElementSibling && headerEl.nextElementSibling.nextElementSibling.innerText.trim()) {
-                  return headerEl.nextElementSibling.nextElementSibling.innerText.trim();
-                }
-                
-                const tr = headerEl.closest('tr');
-                if (tr) {
-                  const cells = Array.from(tr.querySelectorAll('td, th'));
-                  const idx = cells.indexOf(headerEl);
-                  if (idx !== -1 && cells[idx+1]) return cells[idx+1].innerText.trim();
-                  
-                  const table = tr.closest('table');
-                  if (table) {
-                    const tbodyTr = table.querySelector('tbody tr');
-                    if (tbodyTr) {
-                      const tbodyCells = tbodyTr.querySelectorAll('td');
-                      if (tbodyCells[idx]) return tbodyCells[idx].innerText.trim();
+              const extractFromThIndex = (thIndex) => {
+                  if (thIndex !== -1) {
+                    const headerEl = ths[thIndex];
+                    if (headerEl.nextElementSibling && headerEl.nextElementSibling.innerText.trim()) return headerEl.nextElementSibling.innerText.trim();
+                    if (headerEl.nextElementSibling?.nextElementSibling && headerEl.nextElementSibling.nextElementSibling.innerText.trim()) return headerEl.nextElementSibling.nextElementSibling.innerText.trim();
+                    
+                    const tr = headerEl.closest('tr');
+                    if (tr) {
+                      const cells = Array.from(tr.querySelectorAll('td, th'));
+                      const idx = cells.indexOf(headerEl);
+                      if (idx !== -1 && cells[idx+1]) return cells[idx+1].innerText.trim();
+                      
+                      const table = tr.closest('table');
+                      if (table) {
+                        const tbodyTr = table.querySelector('tbody tr');
+                        if (tbodyTr) {
+                          const tbodyCells = tbodyTr.querySelectorAll('td');
+                          if (tbodyCells[idx]) return tbodyCells[idx].innerText.trim();
+                        }
+                      }
                     }
                   }
-                }
-              }
+                  return null;
+              };
+
+              if (!name) name = extractFromThIndex(nameThIndex);
+              if (!shares) shares = extractFromThIndex(sharesThIndex);
               
-              return null;
+              return { name, shares };
             });
 
-            name = extractedName || "Check site for details";
+            name = extractedData.name || "Check site for details";
+            if (status === "Allotted" && extractedData.shares) {
+               name += ` (Shares: ${extractedData.shares})`;
+            }
           } catch (e) {
             status = "Scraper Error (MUFG structure changed?)";
           }
@@ -236,9 +259,8 @@ const scrapeAllotment = async (monitor) => {
               // Grab all SGPAs (ignoring the overall CGPA at the very bottom)
               const matches = [...pageText.matchAll(/SGPA\)\s*:\s*([\d\.]+)/gi)];
               if (matches && matches.length > 0) {
-                // Get the very last SGPA on the page (latest semester)
-                const lastMatch = matches[matches.length - 1];
-                cgpa = "Latest SGPA: " + lastMatch[1];
+                // Return all SGPAs found on the page to ensure the requested one is included
+                cgpa = "SGPAs: " + matches.map(m => m[1]).join(', ');
               }
               name = cgpa;
             } else {
