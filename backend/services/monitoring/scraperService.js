@@ -10,30 +10,39 @@ const scrapeAllotment = async (monitor) => {
 
   const results = [];
   
+  // Only launch Puppeteer for sites that need it
+  const needsPuppeteer = !monitor.url.includes('vishnu.edu.in');
+  
   let browser = null;
+  let page = null;
+  
   try {
-    if (process.env.NODE_ENV === 'production') {
-      browser = await puppeteer.launch({
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath(),
-        headless: chromium.headless,
-        ignoreHTTPSErrors: true,
-      });
-    } else {
-      browser = await puppeteer.launch({
-        headless: "new"
-      });
-    }
+    if (needsPuppeteer) {
+      if (process.env.NODE_ENV === 'production') {
+        browser = await puppeteer.launch({
+          args: chromium.args,
+          defaultViewport: chromium.defaultViewport,
+          executablePath: await chromium.executablePath(),
+          headless: chromium.headless,
+          ignoreHTTPSErrors: true,
+        });
+      } else {
+        browser = await puppeteer.launch({
+          headless: "new"
+        });
+      }
 
-    const page = await browser.newPage();
-    
-    // Set a realistic user agent
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+      page = await browser.newPage();
+      
+      // Set a realistic user agent
+      await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+    }
 
     for (const pan of pans) {
       try {
-        await page.goto(monitor.url, { waitUntil: 'networkidle2', timeout: 30000 });
+        if (needsPuppeteer) {
+          await page.goto(monitor.url, { waitUntil: 'networkidle2', timeout: 30000 });
+        }
 
         let status = "Not Found / Error";
         let name = "N/A";
@@ -229,24 +238,20 @@ const scrapeAllotment = async (monitor) => {
         } else if (monitor.url.includes('vishnu.edu.in')) {
           // Vishnu Institute of Technology logic
           try {
-            await page.waitForSelector('#sroll', { timeout: 10000 });
-            await page.type('#sroll', pan);
+            const FormData = require('form-data');
+            const axios = require('axios');
+            const cheerio = require('cheerio');
             
-            // It might be an AJAX call or navigation, so wait for specific text to appear
-            await page.click('#browse');
+            const form = new FormData();
+            form.append('sroll', pan);
+            form.append('browse', 'View Result');
+
+            const res = await axios.post(monitor.url, form, {
+              headers: { ...form.getHeaders() }
+            });
             
-            // Poll for up to 15 seconds for the result text to appear
-            let foundResult = false;
-            for (let i = 0; i < 15; i++) {
-              await new Promise(r => setTimeout(r, 1000));
-              const currentHtml = await page.content();
-              if (currentHtml.includes('CGPA') || currentHtml.includes('SGPA') || currentHtml.includes('NAN') || currentHtml.toLowerCase().includes('not found') || currentHtml.toLowerCase().includes('invalid')) {
-                foundResult = true;
-                break;
-              }
-            }
-            
-            const pageText = await page.evaluate(() => document.body.innerText);
+            const $ = cheerio.load(res.data);
+            const pageText = $('body').text().replace(/\s+/g, ' ');
             
             if (pageText.includes('NAN') || pageText.toLowerCase().includes('not found') || pageText.toLowerCase().includes('invalid')) {
               status = "Not Released";
@@ -255,10 +260,8 @@ const scrapeAllotment = async (monitor) => {
               status = "Released!";
               
               let cgpa = "Check site for details";
-              // Grab all SGPAs (ignoring the overall CGPA at the very bottom)
               const matches = [...pageText.matchAll(/SGPA\)\s*:\s*([\d\.]+)/gi)];
               if (matches && matches.length > 0) {
-                // Return all SGPAs found on the page to ensure the requested one is included
                 cgpa = "SGPAs: " + matches.map(m => m[1]).join(', ');
               }
               name = cgpa;

@@ -1,0 +1,716 @@
+<!DOCTYPE html><html lang="en" style="overscroll-behavior: none; scroll-behavior: smooth;"><head>
+       <!-- ========== Meta Tags ========== -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="VISHNU">
+        <meta name="robots" content="index, follow">
+      <meta name="description" content="Vishnu Institute of Technology (Autonomous), Bhimavaram offers B.Tech, M.Tech and Ph.D. programs with excellent placements and research opportunities.">
+       <meta name="theme-color" content="#003366">
+       <meta name="keywords" content="engineering college, CSE, ECE, AI ML, placements, Vishnu Institute, vishnu, autonomous college">
+       <meta name="google-site-verification" content="JiRmCD_xuiVlPDIHr1knqIP2x5iBTmP2RB7RZWeXV1s">
+       
+       
+       <!-- Open Graph Meta Tags -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Vishnu Institute of Technology">
+<meta property="og:title" content="Vishnu Institute of Technology (Autonomous) | Engineering College in Andhra Pradesh">
+<meta property="og:description" content="Vishnu Institute of Technology is a premier autonomous engineering college in Andhra Pradesh offering B.Tech and M.Tech programs with excellent placements, research excellence, innovation and modern infrastructure.">
+<meta property="og:url" content="https://vishnu.edu.in/">
+<meta property="og:image" content="https://vishnu.edu.in/assets/img/vit-campus.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_IN">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vishnu Institute of Technology (Autonomous)">
+<meta name="twitter:description" content="NAAC Accredited Autonomous Engineering College in Andhra Pradesh.">
+<meta name="twitter:image" content="https://vishnu.edu.in/assets/img/vit-campus.jpg">
+
+
+
+       <!-- ======== Page title ============ -->
+        <title>Vishnu Institute of Technology | Top Engineering College</title>
+        <!--<< Favcion >>-->
+        <link rel="shortcut icon" href="assets/img/favicon.ico">
+        <!--<< Bootstrap min.css >>-->
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <!--<< All Min Css >>-->
+        <link rel="stylesheet" href="assets/css/all.min.css">
+        <!--<< Animate.css >>
+        <link rel="stylesheet" href="assets/css/animate.css">-->
+        <!--<< Magnific Popup.css >>
+        <link rel="stylesheet" href="assets/css/magnific-popup.css">-->
+        <!--<< MeanMenu.css >>-->
+        <link rel="stylesheet" href="assets/css/meanmenu.css">
+        <!--<< Swiper Bundle.css >>-->
+        <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+        <!--<< Nice Select.css >>
+        <link rel="stylesheet" href="assets/css/nice-select.css">-->
+        <!--<< Flacticon.css >>-->
+        <link rel="stylesheet" href="assets/css/flacticon.css">
+        <!--<< Main.css >>-->
+        <link rel="stylesheet" href="assets/css/main.css">
+		 <link rel="stylesheet" href="assets/css/graph.css">
+		 
+        <link rel="canonical" href="https://vishnu.edu.in/">
+        
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"CollegeOrUniversity",
+ "name":"Vishnu Institute of Technology",
+ "url":"https://vishnu.edu.in",
+ "logo":"https://vishnu.edu.in/assets/img/logo.png",
+ "address":{
+   "@type":"PostalAddress",
+   "addressLocality":"Bhimavaram",
+   "addressRegion":"Andhra Pradesh",
+   "addressCountry":"IN"
+ }
+}
+
+</script>
+
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-EH23LLH39H"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EH23LLH39H');
+</script></head>
+    
+    <!-- Google tag (gtag.js) -->
+
+    
+    <body style="height: 1954px; overscroll-behavior: none; scroll-behavior: auto;">Access Denied
+
+
+
+        <!-- Header Section Start -->
+         <header id="header-sticky" class="header-1">
+            <div class="container-fluid">
+                <div class="mega-menu-wrapper">
+                    <div class="header-main">
+                        <div class="header-left">
+                            <div class="logo">
+                                <a href="index" class="header-logo">
+                                    <img src="assets/img/logo/Logo_Black.png" alt="logo-img">
+                                </a>
+                            </div>
+                             <div class="mean__menu-wrapper">
+                                <div class="main-menu">
+                                    <div class="mean-push"></div><nav id="mobile-menu" style="display: none;">
+                                        <ul>
+										  <li>
+                                                <a href="#">
+                                                    About
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                </a>
+                                                <ul class="submenu">
+                                                    <li><a href="Vision-Mission">Vision &amp; Mission</a></li>
+													 <li><a href="Founder">Founder Chairman</a></li>
+                                                    <li><a href="Leadership">Leadership Team</a></li>
+													 <li><a href="Governing-Body">Governing Body</a></li>
+													  <li><a href="Principal">Principal</a></li>
+                                                    <li><a href="Functionaries">Important Functionaries</a></li>
+                                                </ul>
+                                            </li>
+
+
+                                           
+
+										<li>
+											<a href="#">
+												Admissions
+												<i class="fa-solid fa-chevron-down"></i>
+											</a>
+
+											<ul class="submenu">
+											<li><a href="UG-Courses">U.G. (B.TECH) Programs</a></li>											
+											<li><a href="PG-Courses">P.G. (M.TECH) Programs</a></li> 
+											<li><a href="Scholarship">Scholarship Policies</a></li>												
+											 <li><a href="VidyaLakshmi">Vidyalaxmi Scheme</a></li> 
+										
+										</ul>
+
+										</li>
+
+										<li>
+											<a href="#">
+												Academics
+												<i class="fa-solid fa-chevron-down"></i>
+											</a>
+											
+											<ul class="submenu one-column">
+												<!--	<li><a href="Department-CSE">Computer Science and Engineering</a></li>
+                                                    <li><a href="Department-AI&DS">CSE (Artificial Intelligence and Data Science)</a></li>
+                                                    <li><a href="Department-AI&ML">CSE (Artificial Intelligence and Machine Learning)</a></li>               
+													<li><a href="Department-IT">Information Technology</a></li>
+													<li><a href="Department-CSBS">Computer Science and Business System</a></li>
+													<li><a href="Department-ECE">Electronics and Communication Engineering</a></li>
+													<li><a href="Department-ME">Mechanical Engineering</a></li>
+													<li><a href="Department-EEE">Electrical and Electronics Engineering</a></li>
+													<li><a href="Department-CE">Civil Engineering</a></li>-->
+													
+<li><a href="CIV">Civil Engineering</a></li>
+<li><a href="EEE">Electrical &amp; Electronics Engineering</a></li>
+<li><a href="MEC">Mechanical Engineering</a></li>
+<li><a href="ECE">Electronics &amp; Communication Engineering</a></li>
+<li><a href="CSE">Computer Science &amp; Engineering</a></li>
+<li><a href="AIDS">CSE (Artificial Intelligence and Data Science) </a></li>
+<li><a href="AIML">CSE (Artificial Intelligence and Machine Learning) </a></li>
+<li><a href="CSBS">Computer Science &amp; Business Systems</a></li>
+<li><a href="IT">Information Technology</a></li>
+<li><a href="Department-BS?sid=10107">Basic Science</a></li>
+													
+                                                </ul>
+
+											
+
+										</li>
+
+										 <li>
+                                                <a href="#">
+                                                    Study
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                </a>
+                                                <ul class="submenu two-column">
+											<li><a href="Course-Curriculum">Course Structure</a></li>
+											<li><a href="Examination-Notifications">Examination Notifications</a></li>
+											<li><a href="Academic-Calendar">Academic Calendar</a></li>
+											<li><a href="Examination-Schedules">Examination Schedules</a></li> 
+											<li><a href="Academic-Regulations">Academic Regulations</a></li>
+											<li><a href="Student-Results">Student Results</a></li> 
+											<li><a href="OD-Online">Apply <b>O D</b> Online</a></li>
+											<li><a href="DigiLocker" target="_blank">DigiLocker Guide</a></li>
+											
+											 
+											 
+										</ul>
+                                            </li>
+
+
+                                            <li>
+                                                <a href="#">
+                                                    Discover
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                </a>
+                                              	<ul class="submenu one-column">
+                                                    <li><a href="Campus-Life">Campus Life</a></li>
+                                                    <li><a href="Why-choose-us">Why choose us?</a></li>
+													 <li><a href="Staff">Staff Directory</a></li>
+													<li><a href="Academic-Collabrations">Academic Collabrations</a></li>
+									
+                                                     <li><a href="Hostels">Hostels</a></li>
+                                                     <li><a href="https://www.vishnutransport.in/" target="_blank">Tranportation</a></li>
+                                                     <li><a href="Health-Care">Health Care</a></li>
+                                                    <li><a href="Alumni">Our Alumni</a></li>
+                                                    <li><a href="Awards">Honours &amp; Awards</a></li>
+													<li><a href="Library">Central Library</a></li>
+													<li><a href="Sports">Sports &amp; Recreation</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="has-dropdown">
+                                                <a href="#">
+                                                    Research
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                </a>
+                                                <ul class="submenu two-column">
+                                                     <li><a href="Research-Development">R&amp;D Cell</a></li>
+                                                    <li><a href="Research-Activities">Monthly Publications</a></li>
+                                                    <li><a href="Research-Glimpses">Research Outlook</a></li>
+                                                    <li><a href="Research-Publications">Publications</a></li>
+                                                    <li><a href="Research-Patents">Patents</a></li>
+                                                    <li><a href="Recognized-Supervisors">Recognized Supervisors</a></li>
+                                                   <li><a href="Research-Domains">Research Domains</a></li>
+                                                    <li><a href="Research-Facilities">Research Facilities</a></li>
+                                                    <li><a href="Research-centers">Research centers</a></li>
+                                                    <li><a href="Research-Tool">Plagiarism Tool</a></li>
+                                                    <li><a href="Research-Policy">Research Policy</a></li>
+                                                   
+                                                     <li><a href="Research-FDPs">Research Activities</a></li>
+                                                    <li><a href="Professional-Bodies">Professional Bodies</a></li>
+                                                    <li><a href="Research-Consultancy">Consultancy</a></li>
+                                                    <li><a href="Research-Sponsored-Projects">Sponsored Projects</a></li>
+                                                    <li><a href="Research-Events">Research Events</a></li>
+                                                    
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    Placements
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                </a>
+                                                <ul class="submenu">
+													<li><a href="Placement-Offers">Placements 2025-'26</a></li>
+                                                    <li><a href="Placement-Team">Placement Team</a></li>
+                                                    <li><a href="Placement-Offices">Placement Offices</a></li>
+                                                    <li><a href="Placement-Analytics">Placement Analytics</a></li>
+													<li><a href="Placement-Recruiters">Our Recruiters</a></li>
+													
+                                                </ul>
+												 
+                                            </li>
+                                            
+											 
+											 <li>
+                                                <a href="Innovation">
+                                                    Innovations
+                                                    <i class="fa-solid"></i>
+                                                </a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a href="Statutory">
+                                                    Statutory
+                                                    <i class="fa-solid"></i>
+                                                </a>
+                                            </li>
+											
+											
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="header-right d-flex justify-content-end align-items-center">
+                           <!-- <div class="search-widget">
+                                <form action="PageUnderConstruction">
+                                     <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                    <input type="text" placeholder="Search">
+                                </form>
+                            </div> -->
+                            <!-- <div class="header-button">
+                                <a href="#" class="theme-btn">Alumni</a>
+                            </div> -->
+                            <div class="header__hamburger d-xl-none my-auto">
+                                <div class="sidebar__toggle">
+                                    <i class="fas fa-bars"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header> 
+        
+<script>
+    
+    var mobileMenu = $('#mobile-menu').html();
+$('.mobile-menu').html('<ul>' + mobileMenu + '</ul>');
+</script>        
+        
+     <div id="smooth-wrapper" style="inset: 0px; width: 100%; height: 100%; position: fixed; overflow: hidden;">
+        <div id="smooth-content" style="translate: none; rotate: none; scale: none; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); box-sizing: border-box; width: 100%; overflow: visible;">
+	
+	<!-- Breadcrumb Section Start -->
+        <div class="breadcrumb-wrapper-2 style-tour-page bg-cover" style="background-image: url(IP-WEBP/ResearchBanner.webp);">
+            <div class="container">
+                <div class="page-heading">
+                    <div class="breadcrumb-sub-title">
+                        <h1 class="wow fadeInUp animated" data-wow-delay=".3s" style="visibility: visible; animation-delay: 0.3s;">Student Results</h1>
+                    </div>
+
+										<!--  -->
+
+					 <div class="from-box wow fadeInUp animated" data-wow-delay=".3s" style="visibility: visible; animation-delay: 0.3s;">
+                                <h3>Academics</h3>
+                                <div class="box-item-2">
+                                    
+									<div class="form-clt">
+                                         <a href="Examination-Notifications"><button class="theme-btn" type="submit">
+                                          Examination Notifications
+                                        </button></a>
+                                    </div> 
+
+								<div class="form-clt">
+                                        <a href="Examination-Schedules"><button class="theme-btn" type="submit">
+                                          Examination Schedules
+                                        </button></a>
+                                    </div>
+
+										<!-- <div class="form-clt">
+                                       <a href="Placement-Offices"><button class="theme-btn" type="submit">
+                                           Liaison Offices
+                                        </button></a>
+                                    </div> -->
+
+									 <div class="form-clt">
+                                      <a href="Student-Results"><button class="theme-btn" type="submit">
+                                         Student Results
+                                        </button></a> 
+                                    </div> 
+
+								
+                                </div>
+                            </div>
+
+							<!--  -->
+
+                    <ul class="breadcrumb-items wow fadeInUp" data-wow-delay=".5s" style="visibility: hidden; animation-delay: 0.5s; animation-name: none;">
+                        <li>
+                            <a href="index">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+						 Academics
+                        </li>
+                         <li class="style-2">
+						 Student Results
+                        </li>
+                    </ul>
+                  
+                    </div>
+                </div>
+            </div>
+     
+ <style>
+     .button-small {
+  /* Adjust padding to control button height and width around the text */
+  padding: 5px 10px; /* 5px top/bottom, 10px left/right */
+
+  /* Make the font size smaller */
+  font-size: 0.8rem; /* Use 'rem' or 'em' for scalability */
+
+  /* Optional additional styles for a better look */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px; /* Optional: adds rounded corners */
+  cursor: pointer;
+  display: inline-block; /* Ensures proper layout behavior */
+}
+     
+ </style>                    
+ <section class="destination-details section-padding pt-0 fix">
+                        <div class="container">
+						    <div class="destination-details-wrapper">
+                                <div class="row g-4">
+                                
+                                    <div class="col-lg-10 col-12">
+                                        <div class="destination-details-content">
+
+
+<div class="price-box-item">
+<h3 class="page-title">RESULTS</h3>
+
+<form method="POST" name="browse" enctype="multipart/form-data" class="form-clt">
+
+<h3>Student RollNo. &nbsp;&nbsp;<input type="text" name="sroll" id="sroll" value="" style="background-color:#222;">
+<input type="submit" value="View Result" name="browse" id="browse" class="button-small">&nbsp;&nbsp;<!-- <input type='button' id='btn' value='Print' onclick='printDiv();'> -->
+</h3></form>
+
+
+
+
+<div class="table-responsive">
+
+
+
+						
+
+
+
+	</div>
+   	
+
+
+                                   
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                </div></div></section>  <!-- Footer Section Start -->
+            <footer class="footer-section fix header-bg">
+                <div class="container">
+                    <div class="footer-widget-wrapper">
+                        <div class="row">
+                           <!-- <div class="col-xl-4 col-md-3 col-lg-2 wow fadeInUp">
+                                <div class="single-footer-widget">
+                                    <div class="wid-title">
+                                        <h4>Departments</h4>
+                                    </div>
+                                    <ul class="list-area">
+                                        <li>
+                                            <a href="https://www.vishnu.edu.in/Department-CE?sid=10101">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                               Civil Engineering
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.vishnu.edu.in/Department-EEE?sid=10102">
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                                Electrical & Electronics Engineering
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.vishnu.edu.in/new/Department-ME?sid=10103">
+                                                <i class="fa-solid fa-chevron-right"></i>
+											    Mechanical Engineering
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.vishnu.edu.in/Department-ECE?sid=10104">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                               Electronics & Communication Engineering
+                                            </a>
+                                        </li>
+										 <li>
+                                            <a href="https://www.vishnu.edu.in/Department-CSE?sid=10105">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                              Computer Science & Engineering
+                                            </a>
+                                        </li>
+                                         <li>
+                                            <a href="https://www.vishnu.edu.in/Department-AI&DS?sid=10110">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                             CSE(Artificial Intelligence & Data Science)
+                                            </a>
+                                        </li>
+                                         <li>
+                                            <a href="https://www.vishnu.edu.in/new/Department-AI&ML?sid=10109">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                             CSE(Artificial Intelligence & Machine Learning)
+                                            </a>
+                                        </li>
+                                         <li>
+                                            <a href="https://www.vishnu.edu.in/Department-CSBS?sid=10111">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                              Computer Science & Business Systems
+                                            </a>
+                                        </li>
+                                         <li>
+                                            <a href="https://www.vishnu.edu.in/Department-CSBS?sid=10111">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                             Computer Science & Business Systems
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.vishnu.edu.in/Department-IT?sid=10106">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                             Information Technology
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div> -->
+                           <!--  <div class="col-xl-3 col-md-4 col-lg-3 wow fadeInUp" data-wow-delay=".2s">
+                                <div class="single-footer-widget">
+                                    <div class="wid-title">
+                                        <h4>Discover</h4>
+                                    </div>
+                                   <ul class="list-area">
+                                       
+										
+                                         <li>
+                                            <a href="#">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                               Intitutional Development Plan
+                                            </a>
+                                        </li>
+                                         <li>
+                                            <a href="#">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                               Audit Reports
+                                            </a>
+                                        </li>
+                                         <li>
+                                            <a href="#">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                               Organogram
+                                            </a>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>-->
+                            <div class="col-xl-3 col-md-4 col-lg-3 wow fadeInUp" data-wow-delay=".2s" style="visibility: hidden; animation-delay: 0.2s; animation-name: none;">
+                                <div class="single-footer-widget">
+                                    <div class="wid-title">
+                                        <h4>Quick Links</h4>
+                                    </div>
+                                    <ul class="list-area">
+                                         <li>
+                                            <a href="Alumni">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                               Alumni
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://vishnu.ac.in/" target="_blank">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                               Grievance
+                                       </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.srivishnu.edu.in/vishnu-era/" target="_blank">
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                                Vishnu ERA
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://vishnu.ac.in/" target="_blank">
+                                                <i class="fa-solid fa-chevron-right"></i>
+											Student Portal
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.aicte.gov.in/feedback/index.php">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                               AICTE Feedback
+                                            </a>
+                                        </li>
+										 
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-4 col-lg-3 wow fadeInUp" data-wow-delay=".4s" style="visibility: hidden; animation-delay: 0.4s; animation-name: none;">
+                                <div class="single-footer-widget">
+                                    <div class="wid-title">
+                                        <h4>Affiliation/Accreditation</h4>
+                                    </div>
+                                    <ul class="list-area">
+                                        <li>
+                                            <a href="statutory/NAAC_Accriditation.pdf" target="_blank">
+                                            <i class="fa-solid fa-chevron-right"></i>
+												NAAC Accreditation
+                                            </a>
+                                        </li>
+                                        <li>
+                                           
+                                                <a> <i class="fa-solid fa-chevron-right"></i>
+                                              AICTE EOA -</a>
+                                                
+                                                 <a href="Docs/AICTE/EOA_Report_202627_VIT.PDF" target="_blank">2026-27</a>
+                                        </li>
+                                        <li>
+                                            <a href="statutory/NBA_Accriditation.pdf" target="_blank">
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                                NBA Accreditation
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="statutory/UGC%20Autonomous.pdf" target="_blank">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                           UGC and JNTUK Autonomous
+                                            </a>
+                                        </li>
+										<li>
+                                            <a href="statutory/JNTUK%20Perminant%20Affiliation.pdf" target="_blank">
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                           JNTUK Permanent Affiliation
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6 col-lg-3 wow fadeInUp" data-wow-delay=".6s" style="visibility: hidden; animation-delay: 0.6s; animation-name: none;">
+                                <div class="single-footer-widget">
+                                    <div class="wid-title">
+                                        <h4>Get In Touch</h4>
+                                    </div>
+                                    
+                                    <div class="contact-item mb-0">
+                                        <div class="icon">
+                                        <i class="fa-regular fa-phone-volume"></i>
+                                        </div>
+                                        <div class="content">
+                                            <h6>
+                                            <a href="tel:08816251333">+91 8816 251 333 (Office)</a><br>
+											 <a href="tel:08816251333"> +91 99494 86543</a> (Admissions)
+                                            </h6>
+                                        </div>
+                                </div>
+                                
+                                 <div class="contact-item">
+                                        <div class="icon">
+                                        <i class="fa-regular fa-envelope"></i>
+                                        </div>
+                                        <div class="content">
+                                            <h6>
+                                            <a href="mailto:info@vishnu.edu.in">info@vishnu.edu.in</a>
+											<a href="mailto:principal@vishnu.edu.in">principal@vishnu.edu.in</a>
+											<a href="mailto:bgverifications@vishnu.edu.in">bgverifications@vishnu.edu.in</a>
+
+                                            </h6>
+                                        </div>
+                                </div>
+                                    
+                                <div class="contact-item">
+                                        <div class="icon">
+                                            <i class="fa-regular fa-map-location-dot"></i>
+                                        </div>
+                                        <div class="content">
+                                            <h6>
+                                                Vishnupur, Bhimavaram <br>
+                                                West Godavari District, <br>Andhra Pradesh, INDIA-534202
+                                            </h6>
+                                        </div>
+                                </div>
+                               
+                                
+                                </div>
+                            </div>
+                           
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom style-1">
+                    <div class="container">
+                        <div class="footer-wrapper">
+                            
+                            <div class="text-item wow fadeInUp" data-wow-delay=".5s" style="visibility: hidden; animation-delay: 0.5s; animation-name: none;">
+                                <p class="text-right"> &nbsp;&nbsp;&nbsp;&nbsp; Copyrights <i>©</i> 2026 All Rights Reserved by <span><b>Sri Vishnu Educational Society</b></span>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Developed by VIT Webteam &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp; webmaster@vishnu.edu.in</p>
+                                <a href="#" class="icon"><i class="fa-solid fa-chevron-up"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>  
+          </div>
+      </div>
+	 <!--<< All JS Plugins >>-->
+        <script src="assets/js/jquery-3.7.1.min.js"></script>
+        <!--<< Viewport Js >>-->
+        <script src="assets/js/viewport.jquery.js"></script>
+        <!--<< Bootstrap Js >>-->
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <!--<< Gsap Min Js >>-->
+        <script src="assets/js/gsap.min.js"></script>
+        <!--<< ScrollTrigger Min Js >>-->
+        <script src="assets/js/ScrollTrigger.min.js"></script>
+        <!--<< ScrollSmoother Min Js >>-->
+        <script src="assets/js/ScrollSmoother.min.js"></script>
+        <!--<< ScrollToPlugin Min Js >>-->
+        <script src="assets/js/split-type.min.js"></script>
+        <!--<< SplitText Min Js >>-->
+        <script src="assets/js/SplitText.min.js"></script>
+        <!--<< nice-selec Js >>-->
+        <script src="assets/js/jquery.nice-select.min.js"></script>
+        <!--<< Waypoints Js >>-->
+        <script src="assets/js/jquery.waypoints.js"></script>
+        <!--<< Counterup Js >>-->
+        <script src="assets/js/jquery.counterup.min.js"></script>
+        <!--<< Swiper Slider Js >>-->
+        <script src="assets/js/swiper-bundle.min.js"></script>
+        <!--<< MeanMenu Js >>-->
+        <script src="assets/js/jquery.meanmenu.min.js"></script>
+        <!--<< Magnific Popup Js >>-->
+        <script src="assets/js/jquery.magnific-popup.min.js"></script>
+        <!--<< Wow Animation Js >>-->
+        <script src="assets/js/wow.min.js"></script>
+        <!--<< Main.js >>-->
+        <script src="assets/js/main.js"></script> 
+      
+    
+</body></html>
