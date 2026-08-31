@@ -3,7 +3,7 @@ const Monitor = require('../models/Monitor');
 const Notification = require('../models/Notification');
 const { extractStaticContent, scrapeAllotment } = require('../services/monitoring/scraperService');
 const { sendTelegramMessage } = require('../services/notifications/telegramService');
-const { isContentRelevant } = require('../services/relevance/relevanceService');
+const { determineRelevance } = require('../services/relevance/relevanceService');
 
 let schedulerTask = null;
 
@@ -50,9 +50,9 @@ const checkMonitors = async () => {
           console.log(`Content changed for monitor: ${monitor.name}`);
         }
 
-        const isRelevant = isContentRelevant(relevantContent, monitor);
+        const relevanceResult = determineRelevance(relevantContent, monitor);
 
-        if (contentChanged && isRelevant) {
+        if (contentChanged && relevanceResult.relevant) {
           console.log(`Relevant change detected for monitor: ${monitor.name}`);
           
           // Determine if we need to send a notification
