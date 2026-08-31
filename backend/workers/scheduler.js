@@ -48,6 +48,13 @@ const checkMonitors = async () => {
         if (monitor.lastContentHash && monitor.lastContentHash !== contentHash) {
           contentChanged = true;
           console.log(`Content changed for monitor: ${monitor.name}`);
+        } else if (!monitor.lastContentHash && allotmentResults && allotmentResults.length > 0) {
+          // If this is the first check, but the result is ALREADY released or allotted, notify the user immediately!
+          const isSuccess = allotmentResults.some(r => r.status === 'Released!' || r.status === 'Allotted');
+          if (isSuccess) {
+            contentChanged = true;
+            console.log(`Initial success state detected for monitor: ${monitor.name}`);
+          }
         }
 
         const relevanceResult = determineRelevance(relevantContent, monitor);
