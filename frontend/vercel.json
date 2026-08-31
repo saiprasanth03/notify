@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://notify-r4if.onrender.com/api/:path*"
+      "destination": "https://notify-backend-2870.onrender.com/api/:path*"
     },
     {
       "source": "/(.*)",
