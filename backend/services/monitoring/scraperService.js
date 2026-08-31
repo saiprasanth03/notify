@@ -1,5 +1,4 @@
-const puppeteer = process.env.NODE_ENV === 'production' ? require('puppeteer-core') : require('puppeteer');
-const chromium = require('@sparticuz/chromium');
+const puppeteer = require('puppeteer');
 
 const scrapeAllotment = async (monitor) => {
   if (!monitor.identifier) return [];
@@ -18,19 +17,11 @@ const scrapeAllotment = async (monitor) => {
   
   try {
     if (needsPuppeteer) {
-      if (process.env.NODE_ENV === 'production') {
-        browser = await puppeteer.launch({
-          args: chromium.args,
-          defaultViewport: chromium.defaultViewport,
-          executablePath: await chromium.executablePath(),
-          headless: chromium.headless,
-          ignoreHTTPSErrors: true,
-        });
-      } else {
-        browser = await puppeteer.launch({
-          headless: "new"
-        });
-      }
+      browser = await puppeteer.launch({
+        headless: true,
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu']
+      });
 
       page = await browser.newPage();
       
@@ -41,7 +32,8 @@ const scrapeAllotment = async (monitor) => {
     for (const pan of pans) {
       try {
         if (needsPuppeteer) {
-          await page.goto(monitor.url, { waitUntil: 'networkidle2', timeout: 30000 });
+          const finalUrl = monitor.url.includes('kprism.kfintech.com/ipostatus') ? 'https://ipostatus.kfintech.com/' : monitor.url;
+          await page.goto(finalUrl, { waitUntil: 'networkidle2', timeout: 30000 });
         }
 
         let status = "Not Found / Error";
